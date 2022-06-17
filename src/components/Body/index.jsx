@@ -1,6 +1,13 @@
+import Formulario from '../Formulario'
+import Contador from '../Contador'
+
+
 function Body() {
     return(
-        <div>conteúdo</div>
+        <div>
+            <Contador/>
+            <Formulario/>
+        </div>
     )
 }
 
