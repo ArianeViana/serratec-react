@@ -13,41 +13,44 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import axios from "axios"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Lottie from "react-lottie"
+import carregandoAnimacao from "../../animations/loading.json"
+import { MyLink } from "../../Styles";
+
 
 const Alunos = () => {
-  const alunos = [
-    {
-      nome: "Ariane",
-      idade: 31,
-      id: 1,
-    },
-    {
-      nome: "Gustavo",
-      idade: 29,
-      id: 1,
-    },
-    {
-      nome: "Simba",
-      idade: 3,
-      id: 3,
-    },
-    {
-      nome: "Fúria da Noite",
-      idade: 2,
-      id: 4,
-    },
-  ];
+  const [alunos, setAlunos] = useState([]);
+  const [carregando, setCarregando] = useState(true);
 
-  axios.get("https://randomuser.me/api/?results=5").then(({data}) => {
-    console.log(data.results)
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: carregandoAnimacao,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
 
-  } )
+  useEffect(() => {
+    axios.get("https://randomuser.me/api/?results=5").then(({ data }) => {
+      setAlunos(data.results);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (alunos) {
+      setTimeout(() =>{
+        setCarregando(false);
+      }, 2000)
+    }
+  }, [alunos]);
 
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{background:"#ff5555"}}>
+        <AppBar position="static" sx={{ background: "#ff5555" }}>
           <Toolbar>
             <IconButton
               size="large"
@@ -61,34 +64,44 @@ const Alunos = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               News
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">
+              <MyLink to="/materias/cadastro">Cadastro</MyLink>              
+              </Button>
           </Toolbar>
         </AppBar>
       </Box>
       <Container maxWidth="sm">
-        <TableContainer component={Paper} sx={{mt:3}}>
-          <Table size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="right">Id</TableCell>
-                <TableCell align="right">Nome</TableCell>
-                <TableCell align="right">Idade</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {alunos.map((aluno) => (
-                <TableRow
-                  key={aluno.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="right">{aluno.id}</TableCell>
-                  <TableCell align="right">{aluno.nome}</TableCell>
-                  <TableCell align="right">{aluno.idade}</TableCell>
+        {carregando ? (
+          <Lottie 
+          options={defaultOptions}
+            height={400}
+            width={400}
+          />
+        ) : (
+          <TableContainer component={Paper} sx={{ mt: 3 }}>
+            <Table size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="right">Id</TableCell>
+                  <TableCell align="right">Nome</TableCell>
+                  <TableCell align="right">Idade</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {alunos.map((aluno) => (
+                  <TableRow
+                    key={aluno.id.value}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="right">{aluno.id.value}</TableCell>
+                    <TableCell align="right">{aluno.name.first}</TableCell>
+                    <TableCell align="right">{aluno.dob.age}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
       </Container>
     </>
   );
