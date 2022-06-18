@@ -31,9 +31,14 @@ const Contador = () => {
             }
             <Botao onClick={() => alterarNumero()}>Aumentar</Botao>
             <Botao onClick={() => zerar()}>Zerar</Botao>
-            <span>{numero}</span>           
+            <Texto valor={numero} />           
         </Container>
     )
+}
+
+//Prop
+const Texto = ({valor}) => {
+    return <span>{valor}</span>
 }
 
 export default Contador
