@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from '@mui/material/Button';
 
 export const Titulo = styled.h2`
   font-size: 20px;
@@ -22,4 +23,13 @@ export const Botao = styled.button`
 export const MensagemErro = styled.p`
   color: red;
   font-style: italic;
+`
+
+export const BotaoZerar = styled(Button)`
+  &&{
+    width: 73px;
+  height: 31px;
+  margin-right: 10px;
+  }
+  
 `

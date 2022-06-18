@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Container } from "../../Styles"
-import { Botao, MensagemErro, Titulo } from "./Styles"
+import { Botao, BotaoZerar, MensagemErro, Titulo } from "./Styles"
 
 const Contador = () => {
    
@@ -30,7 +30,7 @@ const Contador = () => {
                 )
             }
             <Botao onClick={() => alterarNumero()}>Aumentar</Botao>
-            <Botao onClick={() => zerar()}>Zerar</Botao>
+            <BotaoZerar onClick={() => zerar()} variant="contained" disabled={numero === 0}>Zerar</BotaoZerar>
             <Texto valor={numero} />           
         </Container>
     )
