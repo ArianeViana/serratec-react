@@ -1,3 +1,3 @@
 export const ListagemMaterias = () => {
-    return <>Listagem</>
+    return <>Listagem de Matérias</>
 }
