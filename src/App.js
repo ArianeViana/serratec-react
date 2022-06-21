@@ -18,6 +18,7 @@ function App() {
     },
     escuro: {
       backgroundColor: "#363535",
+      color: "#fff"
     },
   };
 
